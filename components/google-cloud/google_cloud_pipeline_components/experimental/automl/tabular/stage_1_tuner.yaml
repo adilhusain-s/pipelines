@@ -107,11 +107,19 @@ implementation:
         'us-docker.pkg.dev/vertex-ai-restricted/automl-tabular/training:20221203_1325_RC00',
         '", ',
         {if: {
-          cond: {isPresent: feature_ranking},
-          then:
-          ['"--feature_selection_result_path=',
-          {inputUri: feature_ranking},
-          '",']
+        cond: {isPresent: feature_ranking},
+        then:
+        '"--feature_selection_result_path='
+        }},
+        {if: {
+        cond: {isPresent: feature_ranking},
+        then:
+        {inputUri: feature_ranking}
+        }},
+        {if: {
+        cond: {isPresent: feature_ranking},
+        then:
+        '",'
         }},
         '"--disable_early_stopping=',
         {inputValue: disable_early_stopping},
