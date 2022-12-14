@@ -1,4 +1,4 @@
-name: Build  and publish multi-arch docker images
+name: Build  and publish multi-arch docker images for api-server 
 on:
   push:
     branches:
@@ -6,7 +6,7 @@ on:
 
 env:
   DOCKER_USER: adysh97
-  IMG: adysh97/hard_image
+  IMG: adysh97/api-server 
   ARCH: linux/ppc64le,linux/amd64
 
 jobs:
@@ -32,8 +32,8 @@ jobs:
 
       - name: Build multi-arch docker image
         run: |
-          docker buildx build  --load --platform linux/amd64 -t $IMG:amd64 .
-          docker buildx build --load --platform linux/ppc64le -t $IMG:ppc64le .
+          docker buildx build  --load --platform linux/amd64 -t $IMG:amd64 -f backend/Dockerfile .
+          docker buildx build --load --platform linux/ppc64le -t $IMG:ppc64le  -f backend/Dockerfile .
 
       - name: list and inspect
         if: github.event_name == 'push'
